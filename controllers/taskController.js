@@ -1,4 +1,4 @@
-const { readTasks, writeTasks } = require('../utils/tasksUtil');
+const { readTasks, writeTasks, generateId } = require('../utils/tasksUtil');
 
 const getAllTasks = (req, res) => {
     const tasks = readTasks();
@@ -28,7 +28,7 @@ const createTask = (req, res) => {
 
     const tasks = readTasks();
     const newTask = {
-        id: tasks.length + 1,
+        id: generateId(),
         title,
         description,
         completed,

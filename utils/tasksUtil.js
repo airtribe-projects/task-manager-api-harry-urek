@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const tasksFilePath = path.join(__dirname, '../task.json');
 
@@ -14,4 +15,8 @@ const writeTasks = (tasks) => {
     fs.writeFileSync(tasksFilePath, JSON.stringify({ tasks }, null, 2));
 };
 
-module.exports = { readTasks, writeTasks };
+const generateId = () => {
+    return Math.floor(Math.random() * 1000000); // between 0 and 999999
+};
+
+module.exports = { readTasks, writeTasks, generateId };
