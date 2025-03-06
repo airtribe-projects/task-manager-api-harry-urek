@@ -15,8 +15,12 @@ const writeTasks = (tasks) => {
     fs.writeFileSync(tasksFilePath, JSON.stringify({ tasks }, null, 2));
 };
 
-const generateId = () => {
-    return Math.floor(Math.random() * 1000000); // between 0 and 999999
+const generateId = (tasks) => {
+    let id;
+    do {
+        id = Math.floor(Math.random() * 1000000); // between 0 and 999999
+    } while (tasks.some(task => task.id === id));
+    return id;
 };
 
 module.exports = { readTasks, writeTasks, generateId };
