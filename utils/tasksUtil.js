@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
 const tasksFilePath = path.join(__dirname, '../task.json');
@@ -14,13 +14,18 @@ const initIds = async () => {
 
 // load tasks
 const readTasks = async () => {
-    const data = await fs.readFile(tasksFilePath, 'utf-8');
-    return JSON.parse(data).tasks;
+    try {
+        const data = await fs.readFile(tasksFilePath, 'utf-8');
+        return JSON.parse(data).tasks;
+    } catch (error) {
+        console.error('Error reading tasks:', error);
+        return [];
+    }
 };
 
 // save tasks
 const writeTasks = async (tasks) => {
-    await fs.writeFile(tasksFilePath, JSON.stringify({ tasks }, null, 2), 'utf-8');
+    await fs.writeFile(tasksFilePath, JSON.stringify({ tasks }, null, 2))
 };
 
 const generateId = (tasks) => {

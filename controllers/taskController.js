@@ -1,7 +1,7 @@
 const { readTasks, writeTasks, generateId } = require('../utils/tasksUtil');
 
-const getAllTasks = (req, res) => {
-    let tasks = readTasks();
+const getAllTasks = async (req, res) => {
+    let tasks = await readTasks();
 
     if (req.query.completed !== undefined) {
         const completed = req.query.completed === 'true';
@@ -15,8 +15,8 @@ const getAllTasks = (req, res) => {
     res.status(200).json(tasks);
 };
 
-const getTaskById = (req, res) => {
-    const tasks = readTasks();
+const getTaskById = async (req, res) => {
+    const tasks = await readTasks();
     const taskId = parseInt(req.params.id, 10);
     const task = tasks.find(t => t.id === taskId);
 
@@ -27,68 +27,55 @@ const getTaskById = (req, res) => {
     res.status(200).json(task);
 };
 
-const createTask = (req, res) => {
+const createTask = async (req, res) => {
     const { title, description, completed, priority } = req.body;
-
-
-    if (!title.trim() || !description.trim() || typeof completed !== 'boolean') {
-        return res.status(400).json({ message: 'Invalid input: title, description, and completed are required' });
-    }
 
 
     const taskPriority = priority || 'low';
 
-    const tasks = readTasks();
+    const tasks = await readTasks();
     const newTask = {
         id: generateId(tasks),
         title,
         description,
         completed,
-        priority: taskPriority, //  default to 'low'
+        priority: taskPriority, //  default : 'low'
         createdAt: new Date().toISOString(),
     };
 
     tasks.push(newTask);
-    writeTasks(tasks);
+    await writeTasks(tasks);
 
     res.status(201).json(newTask);
 };
 
 
-const updateTask = (req, res) => {
+const updateTask = async (req, res) => {
     const taskId = parseInt(req.params.id, 10);
     const { title, description, completed, priority } = req.body;
 
 
-    if (!title || !description || typeof completed !== 'boolean') {
-        return res.status(400).json({ message: 'Invalid input: title, description, and completed are required' });
-    }
-
-    const tasks = readTasks();
+    const tasks = await readTasks();
     const taskIndex = tasks.findIndex(t => t.id === taskId);
 
     if (taskIndex === -1) {
         return res.status(404).json({ message: 'Task not found' });
     }
 
+    if (title !== undefined) tasks[taskIndex].title = title;
+    if (description !== undefined) tasks[taskIndex].description = description;
+    if (completed !== undefined) tasks[taskIndex].completed = completed;
+    if (priority !== undefined) tasks[taskIndex].priority = priority;
 
-    tasks[taskIndex] = {
-        ...tasks[taskIndex],
-        title,
-        description,
-        completed,
-        priority: priority || tasks[taskIndex].priority,
-    };
-
-    writeTasks(tasks);
+    await writeTasks(tasks);
 
     res.status(200).json(tasks[taskIndex]);
 };
 
 
-const deleteTask = (req, res) => {
+const deleteTask = async (req, res) => {
     const taskId = parseInt(req.params.id, 10);
-    const tasks = readTasks();
+    const tasks = await readTasks();
     const taskIndex = tasks.findIndex(t => t.id === taskId);
 
     if (taskIndex === -1) {
@@ -96,15 +83,16 @@ const deleteTask = (req, res) => {
     }
 
     tasks.splice(taskIndex, 1);
-    writeTasks(tasks);
+    // idSet.delete(taskId);
+    await writeTasks(tasks);
 
     res.status(200).json({ message: 'Task deleted successfully' });
 };
 
 
-const getTasksByPriority = (req, res) => {
+const getTasksByPriority = async (req, res) => {
     const { level } = req.params;
-    const tasks = readTasks();
+    const tasks = await readTasks();
 
     if (!['low', 'medium', 'high'].includes(level)) {
         return res.status(400).json({ message: 'Invalid priority level. Must be one of: low, medium, high' });
