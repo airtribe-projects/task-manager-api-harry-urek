@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const validateTask = require('../middleware/middleware');
 const {
     getAllTasks,
     getTaskById,
@@ -12,8 +13,8 @@ const {
 
 router.get('/', getAllTasks);
 router.get('/:id', getTaskById);
-router.post('/', createTask);
-router.put('/:id', updateTask);
+router.post('/', validateTask(false), createTask);
+router.put('/:id', validateTask(true), updateTask);
 router.delete('/:id', deleteTask);
 router.get('/priority/:level', getTasksByPriority);
 
