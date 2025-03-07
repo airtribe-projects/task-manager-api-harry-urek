@@ -20,23 +20,22 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
 1. Clone the repository:
     
 ```bash
-	git clone https://github.com/your-repo/task-manager-api.git
-    cd task-manager-api
+git clone https://github.com/your-repo/task-manager-api.git
+cd task-manager-api
 ```
     
 2. Install dependencies:
 
 ```bash
-	npm install
+npm install
 ```
     
     
 3. Start the server:
     
 ```bash
-	node app.js
-    
-    $ The server will start on `http://localhost:3000`.
+node app.
+The server will start on `http://localhost:3000`.
 ```
     
     
@@ -44,7 +43,7 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
 4. Run tests:
     
 ```bash
-	npm test
+npm test
 ```
     
     
@@ -67,24 +66,23 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
         
 - **Example Request**:
     
-  ```bash
-	 curl-X GET "http://localhost:3000/tasks?completed=true&sort=createdAt"
-	```
+```bash
+curl-X GET "http://localhost:3000/tasks?completed=true&sort=createdAt"
+```
     
 - **Response**:
     
 ```json
-
 [
-      {
-        "id": 1,
-        "title": "Set up environment",
-        "description": "Install Node.js, npm, and git",
-        "completed": true,
-        "priority": "low",
-        "createdAt": "2023-10-01T12:00:00.000Z"
-      }
-    ]
+  {
+    "id": 1,
+    "title": "Set up environment",
+    "description": "Install Node.js, npm, and git",
+    "completed": true,
+    "priority": "low",
+    "createdAt": "2023-10-01T12:00:00.000Z"
+  }
+]
 
 ```
     
@@ -101,13 +99,11 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
 - **Example Request**:
         
 ```bash
-    curl -X GET http://localhost:3000/tasks/1
-    
+curl -X GET http://localhost:3000/tasks/1
 ```
 - **Response**:
     
 ```    json
-    
   {
     "id": 1,
     "title": "Set up environment",
@@ -116,7 +112,6 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
     "priority": "low",
     "createdAt": "2023-10-01T12:00:00.000Z"
   }
-
 ```
     
 
@@ -130,45 +125,36 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
     
 - **Request Body**:
     
-    ```json
-
-    
+```json
   {
     "title": "New Task",
     "description": "Task Description",
     "completed": false,
     "priority": "medium" // Optional
   }
-  
 ```     
     
 ```bash
 - **Example Request**:
-
-
-    
-    curl -X POST http://localhost:3000/tasks \
-      -H "Content-Type: application/json" \
-      -d '{
-        "title": "New Task",
-        "description": "Task Description",
-        "completed": false
-      }'
-    
+  curl -X POST http://localhost:3000/tasks \
+    -H "Content-Type: application/json" \
+    -d '{
+      "title": "New Task",
+      "description": "Task Description",
+      "completed": false
+    }'
 ```
 - **Response**:
     
 ```    json
-
-  {
-    "id": 16,
-    "title": "New Task",
-    "description": "Task Description",
-    "completed": false,
-    "priority": "low",
-    "createdAt": "2023-10-05T12:00:00.000Z"
-  }
-
+{
+  "id": 16,
+  "title": "New Task",
+  "description": "Task Description",
+  "completed": false,
+  "priority": "low",
+  "createdAt": "2023-10-05T12:00:00.000Z"
+}
 ```
     
 
@@ -183,20 +169,17 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
 - **Request Body**:
     
 ```    json
-
-  {
-    "title": "Updated Task",
-    "description": "Updated Description",
-    "completed": true,
-    "priority": "high" // Optional
-  }
-
+{
+  "title": "Updated Task",
+  "description": "Updated Description",
+  "completed": true,
+  "priority": "high" // Optional
+}
 ```
     
 - **Example Request**:
     
 ```    bash
-
   curl -X PUT http://localhost:3000/tasks/1 \
     -H "Content-Type: application/json" \
     -d '{
@@ -204,12 +187,10 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
       "description": "Updated Description",
       "completed": true
     }'
-    
 ```
 - **Response**:
     
 ```    json
-
   {
     "id": 1,
     "title": "Updated Task",
@@ -218,7 +199,6 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
     "priority": "high",
     "createdAt": "2023-10-01T12:00:00.000Z"
   }
-
 ```
     
 
@@ -233,19 +213,15 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
 - **Example Request**:
     
 ```    bash
-
-    curl -X DELETE http://localhost:3000/tasks/1
-
+curl -X DELETE http://localhost:3000/tasks/1
 ```
     
 - **Response**:
     
 ```    json
-
-  {
-    "message": "Task deleted successfully"
-  }
-
+{
+  "message": "Task deleted successfully"
+}
 ```
     
 
@@ -260,22 +236,22 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
 - **Example Request**:
     
 ```    bash
-  curl -X GET http://localhost:3000/tasks/priority/high
+curl -X GET http://localhost:3000/tasks/priority/high
 ```
     
 - **Response**:
     
 ```    json
-    [
-      {
-        "id": 1,
-        "title": "Set up environment",
-        "description": "Install Node.js, npm, and git",
-        "completed": true,
-        "priority": "high",
-        "createdAt": "2023-10-01T12:00:00.000Z"
-      }
-    ]
+[
+  {
+    "id": 1,
+    "title": "Set up environment",
+    "description": "Install Node.js, npm, and git",
+    "completed": true,
+    "priority": "high",
+    "createdAt": "2023-10-01T12:00:00.000Z"
+  }
+]
 ```
     
 
@@ -302,7 +278,7 @@ The **Task Manager API** is a simple RESTful API built with **Express.js** f
 - Run the included test suite using:
     
 ```bash
-  npm run test
+npm run test
 ```
     
 
