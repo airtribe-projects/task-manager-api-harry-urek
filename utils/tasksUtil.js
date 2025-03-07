@@ -1,26 +1,37 @@
 const fs = require('fs');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
 
 const tasksFilePath = path.join(__dirname, '../task.json');
 
+let tasks = [];
+let idSet = new Set();
+
+const initIds = async () => {
+    tasks = await readTasks();
+    idSet = new Set(tasks.map(task => task.id));
+};
+
+
 // load tasks
-const readTasks = () => {
-    const data = fs.readFileSync(tasksFilePath);
+const readTasks = async () => {
+    const data = await fs.readFile(tasksFilePath, 'utf-8');
     return JSON.parse(data).tasks;
 };
 
 // save tasks
-const writeTasks = (tasks) => {
-    fs.writeFileSync(tasksFilePath, JSON.stringify({ tasks }, null, 2));
+const writeTasks = async (tasks) => {
+    await fs.writeFile(tasksFilePath, JSON.stringify({ tasks }, null, 2), 'utf-8');
 };
 
 const generateId = (tasks) => {
     let id;
     do {
         id = Math.floor(Math.random() * 1000000); // between 0 and 999999
-    } while (tasks.some(task => task.id === id));
+    } while (idSet.has(id));
+    idSet.add(id);
     return id;
 };
+
+initIds();
 
 module.exports = { readTasks, writeTasks, generateId };

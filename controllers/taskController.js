@@ -31,7 +31,7 @@ const createTask = (req, res) => {
     const { title, description, completed, priority } = req.body;
 
 
-    if (!title || !description || typeof completed !== 'boolean') {
+    if (!title.trim() || !description.trim() || typeof completed !== 'boolean') {
         return res.status(400).json({ message: 'Invalid input: title, description, and completed are required' });
     }
 
