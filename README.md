@@ -134,8 +134,8 @@ curl -X GET http://localhost:3000/tasks/1
   }
 ```     
     
-```bash
 - **Example Request**:
+```bash
   curl -X POST http://localhost:3000/tasks \
     -H "Content-Type: application/json" \
     -d '{
