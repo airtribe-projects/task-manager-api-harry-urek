@@ -1,12 +1,12 @@
 const express = require('express');
+const { json, urlencoded } = require('body-parser');
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON and URL-encoded data
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Import and use task routes
+app.use([json(), urlencoded({ extended: true })]);
+
+
 const taskRoutes = require('./routes/routes');
 app.use('/tasks', taskRoutes);
 
